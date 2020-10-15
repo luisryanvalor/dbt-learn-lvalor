@@ -1,0 +1,4 @@
+# packages.yml
+packages:
+    - package: fishtown-analytics/dbt_utils
+      version: 0.5.1

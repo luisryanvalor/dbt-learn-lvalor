@@ -12,6 +12,15 @@ models:
       - name: first_order_date
         description: NULL when a customer has not yet placed an order.
 
+  - name: orders
+    description: One record per order
+    columns:
+      - name: order_id
+        description: "{{ doc('table_orders') }}"
+        tests:
+          - unique
+          - not_null
+
   - name: stg_customers
     description: This model cleans up customer data
     columns:
@@ -29,7 +38,26 @@ models:
         tests:
           - unique
           - not_null
-      - name: status
+      - name: order_status
         tests:
           - accepted_values:
               values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
+
+  - name: stg_payments
+    description: This model cleans up payments data
+    columns:
+      - name: payment_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: payment_status
+        description: status to determine if payment was successfully processed 
+        tests:
+          - accepted_values:
+              values: ['success', 'fail']
+      - name: payment_method
+        description: method of payment from customer
+        tests:
+          - accepted_values:
+              values: ['credit_card', 'coupon', 'bank_transfer', 'gift_card']
